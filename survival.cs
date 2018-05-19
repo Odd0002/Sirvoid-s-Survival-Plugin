@@ -894,8 +894,11 @@ namespace MCGalaxy
 			}
 		}
 		
+		void chestTakeItem(){
+			
+		}
+		
 		void chestPlaceItem(Player p,byte item, int quantity, int durability){
-				
 				
 				int infoIndex = 0;
 				int invIndex = 0;
@@ -918,7 +921,7 @@ namespace MCGalaxy
 				if(!haveBlock(p,item,quantity)) return;
 				subToInv(invIndex,p,item,quantity);
 				
-				string[] chestInfo = playersInfo[infoIndex,0].Split(',');
+				string[] chestInfo = playersInfo[infoIndex,7].Split(',');
 				string chestDir = "./text/survivalPlugin/chests/" + chestInfo[0] + "/" + chestInfo[1] + "," + chestInfo[2] + "," + chestInfo[3] + ".txt";
 				
 				//Loading
@@ -938,22 +941,20 @@ namespace MCGalaxy
 					chestData[i,1] = tempChestData2[1];
 					chestData[i,2] = tempChestData2[2];
 				}
-				//
+
 				//Adding
 				for(int i = 0; i<27; i++){
 					if(chestData[i,0] == "" + item){
 						chestData[i,1] = (int.Parse(chestData[i,1]) + quantity) + "";
-					}
-					
-				}
-				for(int i = 0; i<27; i++){
-					if(chestData[i,0] == null || chestData[i,0] == "0"){
+						break;
+					}else if(chestData[i,0] == null || chestData[i,0] == "0"){
 							chestData[i,0] = "" + item;
 							chestData[i,1] = quantity + "";
 							chestData[i,2] = durability + "";
+							break;
 					}
-				}	
-				
+				}
+
 				//Saving
 				chestDataStr = "";
 				for(int i = 0;i<27;i++){
@@ -1832,7 +1833,7 @@ namespace MCGalaxy
 										double FallDamage = ((int.Parse(playersInfo[i,4]) - (ushort)(pl.Pos.BlockY-2))*0.5)-1.5;
 										
 										int a = (int)(int.Parse(playersInfo[i,5]) - pl.Pos.BlockX);
-										int b = (int)(int.Parse(playersInfo[i,6]) - pl.Pos.BlockY);
+										int b = (int)(int.Parse(playersInfo[i,6]) - pl.Pos.BlockZ);
 										int dist =  (int)Math.Sqrt(a * a + b * b);
 										
 										if(FallDamage < 1 || dist > 15) FallDamage = 0;
@@ -1843,7 +1844,7 @@ namespace MCGalaxy
 										
 										playersInfo[i,4] = (ushort)(pl.Pos.BlockY-2) + "";
 										playersInfo[i,5] = pl.Pos.BlockX + "";
-										playersInfo[i,6] = pl.Pos.BlockY + "";
+										playersInfo[i,6] = pl.Pos.BlockZ + "";
 										if(int.Parse(playersInfo[i,1]) < 1){
 											playersInfo[i,4] = "0";
 											playersInfo[i,1] = "20";
