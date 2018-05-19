@@ -929,7 +929,8 @@ namespace MCGalaxy
 				}else{
 					chestDataStr = System.IO.File.ReadAllText(chestDir);
 				}
-					
+				
+
 				string[] tempChestData = chestDataStr.Split(',');
 				for(int i = 0;i<27;i++){
 					string[] tempChestData2 = tempChestData[i].Split(';');
@@ -938,15 +939,14 @@ namespace MCGalaxy
 					chestData[i,2] = tempChestData2[2];
 				}
 				//
-				
 				//Adding
-				for(int i = 1; i<27; i++){
+				for(int i = 0; i<27; i++){
 					if(chestData[i,0] == "" + item){
 						chestData[i,1] = (int.Parse(chestData[i,1]) + quantity) + "";
 					}
 					
 				}
-				for(int i = 1; i<30; i++){
+				for(int i = 0; i<27; i++){
 					if(chestData[i,0] == null || chestData[i,0] == "0"){
 							chestData[i,0] = "" + item;
 							chestData[i,1] = quantity + "";
@@ -1318,6 +1318,7 @@ namespace MCGalaxy
 										}
 									}
 									subToInv(i,p,103,1);
+									refreshInvOrder(p,i);
 									return;
 								}
 								if(p.level.BlockName(block) != "Air" && p.level.BlockName(block) != "air"){
